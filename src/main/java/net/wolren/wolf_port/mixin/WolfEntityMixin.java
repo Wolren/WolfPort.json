@@ -74,9 +74,6 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
     public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
-        if (this.isTamed()) {
-            this.updateAttributesForTamed();
-        }
     }
 
     @Inject(
@@ -100,8 +97,7 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
 
             if (this.isTamed()) {
                 wolfEntity.setOwnerUuid(this.getOwnerUuid());
-                wolfEntity.setTamed(true);
-                this.updateAttributesForTamed();
+                wolfEntity.setTamed(true);;
                 if (this.random.nextBoolean()) {
                     wolfEntity.setCollarColor(this.getCollarColor());
                 } else {
@@ -164,7 +160,6 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
 
             if (this.random.nextInt(3) == 0) {
                 this.setOwner(player);
-                this.updateAttributesForTamed();
                 this.navigation.stop();
                 this.setTarget(null);
                 this.setSitting(true);
@@ -225,13 +220,14 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 
-    @Unique
-    protected void updateAttributesForTamed() {
-        if (this.isTamed()) {
+    @Inject(method = "setTamed", at = @At("TAIL"))
+    public void onSetTamed(boolean tamed, CallbackInfo ci) {
+        if (tamed) {
             this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(40.0);
-            this.setHealth(40.0F);
+            this.setHealth(40.0f);
         } else {
             this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8.0);
         }
+        this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(4.0);
     }
 }
