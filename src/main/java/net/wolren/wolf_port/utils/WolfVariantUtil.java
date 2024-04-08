@@ -26,7 +26,6 @@ public class WolfVariantUtil {
 
     public static WolfVariant fromBiome(Identifier biomeId) {
         WolfVariant variant = BIOME_TO_VARIANT_MAP.get(biomeId);
-        WolfPort.LOGGER.info(biomeId.toString());
         if (variant == null) {
 
             variant = WolfVariant.PALE;

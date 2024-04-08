@@ -41,5 +41,10 @@
       <option name="name" value="LoomLocalRemappedMods" />
       <option name="url" value="file:/$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="LoomGlobalMinecraft" />
+      <option name="name" value="LoomGlobalMinecraft" />
+      <option name="url" value="file:/$PROJECT_DIR$/../../gradle-5.5/bin/.gradle/caches/fabric-loom/minecraftMaven/" />
+    </remote-repository>
   </component>
 </project>
