@@ -41,7 +41,7 @@ public abstract class WolfEntityRendererMixin extends MobEntityRenderer<WolfEnti
         cir.setReturnValue(new Identifier(WolfPort.MOD_ID, basePath));
     }
 
-    @Inject(method = "render(Lnet/minecraft/entity/passive/WolfEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"))
+    @Inject(method = "render(Lnet/minecraft/entity/passive/WolfEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
     public void render(WolfEntity wolfEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
         if (wolfEntity.isFurWet()) {
             float h = wolfEntity.getFurWetBrightnessMultiplier(g);
@@ -52,5 +52,6 @@ public abstract class WolfEntityRendererMixin extends MobEntityRenderer<WolfEnti
         if (wolfEntity.isFurWet()) {
             this.model.setColorMultiplier(1.0F, 1.0F, 1.0F);
         }
+        ci.cancel();
     }
 }
