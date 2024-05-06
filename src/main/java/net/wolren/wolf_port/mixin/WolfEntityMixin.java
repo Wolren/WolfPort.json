@@ -174,17 +174,17 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
         }
     }
 
-    /**
-     * @author Wolren
-     * @reason To prevent id duplication
-     */
-    @Overwrite
-    public void initDataTracker() {
+    @Inject(
+            at = {@At("HEAD")},
+            method = {"initDataTracker"},
+            cancellable = true)
+    public void initDataTracker(CallbackInfo ci) {
         super.initDataTracker();
         this.dataTracker.startTracking(BEGGING, false);
         this.dataTracker.startTracking(COLLAR_COLOR, DyeColor.RED.getId());
         this.dataTracker.startTracking(ANGER_TIME, 0);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
+        ci.cancel();
     }
 
 
