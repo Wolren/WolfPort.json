@@ -174,17 +174,17 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
         }
     }
 
-    @Inject(
-            at = {@At("HEAD")},
-            method = {"initDataTracker"},
-            cancellable = true)
-    public void initDataTracker(CallbackInfo ci) {
+    /**
+     * @author Wolren
+     * @reason Compat with Woodwalkers
+     */
+    @Overwrite
+    public void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(BEGGING, false);
         this.dataTracker.startTracking(COLLAR_COLOR, DyeColor.RED.getId());
         this.dataTracker.startTracking(ANGER_TIME, 0);
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
-        ci.cancel();
     }
 
 
