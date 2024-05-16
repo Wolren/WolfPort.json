@@ -1,6 +1,8 @@
 {
+  "required_mod": "wolf_port",
   "entity_type": "minecraft:wolf",
   "type_provider": {
+    "fallback": 0,
     "range": 9,
     "nbt": [
       {
